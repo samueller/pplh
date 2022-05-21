@@ -1,0 +1,5 @@
+age → aspirin → heart_attack
+age → heart_attack
+cholesterol → heart_attack
+
+import "health_records.csv"

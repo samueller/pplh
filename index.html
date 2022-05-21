@@ -1,0 +1,65 @@
+<html>
+<head>
+    <title>PPL Health</title>
+    <script src="tree-sitter.js"></script>
+    <style>
+        textarea {
+            width: 100%;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset>
+            <legend>PPL Health code</legend>
+            <textarea id="pplh" disabled></textarea>
+        </fieldset>
+        <fieldset>
+            <legend>Dice code</legend>
+            <textarea id="dice" readonly></textarea>
+        </fieldset>
+    </form>
+    <script lang="javascript">
+        const addParent = (vars, child, parent) => {
+            if (vars[child])
+                vars[child].parents.push(parent)
+            else
+                vars[child] = {parents: [parent]}
+        }
+        const addParents = (vars, edgesNode) => {
+            if (edgesNode.child(0).type == 'identifier')
+                addParent(vars, edgesNode.child(2).text, edgesNode.child(0).text)
+            else if (edgesNode.child(0).type == 'edges') {
+                addParent(vars, edgesNode.child(2).text, edgesNode.child(0).child(2).text)
+                addParents(vars, edgesNode.child(0))
+            }
+            return vars
+        }
+        const genDice = tree => {
+            const vars = tree.children
+                            .filter(child => child.type == 'edges')
+                            .reduce(addParents, {})
+
+        }
+        let parser
+        const Parser = window.TreeSitter,
+            pplh = document.getElementById('pplh'),
+            dice = document.getElementById('dice')
+        Parser.init()
+            .then(() => Parser.Language.load('tree-sitter-pplh.wasm'))
+            .then(PPLH => {
+                parser = new Parser
+                parser.setLanguage(PPLH)
+                pplh.disabled = false
+            })
+
+        pplh.addEventListener('input', e => {
+            dice.innerHTML = e.target.value
+            const tree = parser.parse(e.target.value)
+            console.log(genDice(tree))
+        })
+    </script>
+        
+</body>
+</html>
