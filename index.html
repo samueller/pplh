@@ -36,11 +36,43 @@
             }
             return vars
         }
+        const cptIndex = colIndexes => vars => values =>
+            (vars || []).reduce((index, variable, i) =>
+                index + (2**i)*values[colIndexes[variable]],
+            0)
+        const importData = async (vars, importNode) => {
+            const response = await fetch(importNode.child(2).text)
+            const data = await response.text()
+            const lines = data.split('\n')
+            const cols = lines[0].split(',').reduce((cols, col, i) => {
+                cols[0].push(col)
+                cols[1][col] = i
+                if (!vars[col])
+                    vars[col] = {cpt: [[0, 0]]}
+                else if (!vars[col].cpt)
+                    vars[col].cpt = Array(2**vars[col].parents.length).fill().map(_ => [0, 0])
+                return cols
+            }, [[], {}])
+            lines.slice(1).forEach(line => {
+                line = line.split(',')
+                if (line.length != cols[0].length)
+                    return
+                cols[0].forEach(col => {
+                    const index = cptIndex(cols[1])(vars[col].parents)(line)
+                    vars[col].cpt[index][0] += parseInt(line[cols[1][col]])
+                    vars[col].cpt[index][1]++
+                })
+            })
+            return vars
+        }
         const genDice = tree => {
-            const vars = tree.children
+            let vars = tree.children
                             .filter(child => child.type == 'edges')
                             .reduce(addParents, {})
-
+            vars = tree.children
+                        .filter(child => child.type == 'import')
+                        .reduce(importData, vars)
+            return vars
         }
         let parser
         const Parser = window.TreeSitter,
@@ -55,9 +87,9 @@
             })
 
         pplh.addEventListener('input', e => {
-            dice.innerHTML = e.target.value
+            // dice.innerHTML = e.target.value
             const tree = parser.parse(e.target.value)
-            console.log(genDice(tree))
+            genDice(tree.rootNode).then(diceCode => dice.innerHTML = JSON.stringify(diceCode))
         })
     </script>
         
