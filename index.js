@@ -82,6 +82,11 @@ const genDice = async (tree) => {
             .filter(child => child.type == 'imports')
             .reduce(importData, vars);
         let code = await bayesianNetwork(await vars);
+
+        vars = tree.children
+            .filter(child => child.type == 'probability');
+        console.log(vars);
+
         return code
     } catch (err) {
         return "Transpilation error: " + err;
@@ -99,10 +104,13 @@ Parser.init()
         parser = new Parser
         parser.setLanguage(PPLH)
         pplh.disabled = false
+        transpile();
     });
 
-pplh.addEventListener('input', async e => {
-    const tree = parser.parse(e.target.value);
+async function transpile() {
+    const tree = parser.parse(pplh.value);
     const diceCode = await genDice(tree.rootNode);
     dice.innerHTML = diceCode;
-});
+}
+
+pplh.addEventListener('input', transpile);

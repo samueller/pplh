@@ -1,25 +1,34 @@
 <html>
-  <head>
-    <title>PPL Health</title>
-    <script src="tree-sitter.js"></script>
-    <style>
-      textarea {
-        width: 100%;
-        height: 300px;
-      }
-    </style>
-  </head>
-  <body>
-    <form>
-      <fieldset>
-        <legend>PPL Health code</legend>
-        <textarea id="pplh" disabled></textarea>
-      </fieldset>
-      <fieldset>
-        <legend>Dice code</legend>
-        <textarea id="dice" readonly></textarea>
-      </fieldset>
-    </form>
-    <script lang="javascript" src="index.js"></script>
-  </body>
+
+<head>
+  <title>PPL Health</title>
+  <script src="tree-sitter.js"></script>
+  <style>
+    textarea {
+      width: 100%;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <form>
+    <fieldset>
+      <legend>PPL Health code</legend>
+      <textarea id="pplh" disabled>
+age -> aspirin -> heart_attack
+age -> heart_attack
+cholesterol -> heart_attack
+
+import "health_records.csv"
+        </textarea>
+    </fieldset>
+    <fieldset>
+      <legend>Dice code</legend>
+      <textarea id="dice" readonly></textarea>
+    </fieldset>
+  </form>
+  <script lang="javascript" src="index.js"></script>
+</body>
+
 </html>
