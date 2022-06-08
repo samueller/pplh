@@ -5,4 +5,5 @@ cholesterol → heart_attack
 import "health_records.csv"
 
 Pr(heart_attack|age,aspirin)
+Pr(heart_attack+aspirin|(age,aspirin)+(!age,cholestrol,aspirin))
 Pr(age | aspirin = cholesterol ∨ aspirin ⊕ ¬heart_attack)

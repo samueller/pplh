@@ -108,6 +108,10 @@ const genQuery1 = (top) => {
         return code;
     }
 
+    if (top.children[0].type === 'lnot') {
+        return '!' + genQuery1(top.children[1]);
+    }
+
     if (top.children[0].type === 'identifier') {
         return top.children[0].text;
     }

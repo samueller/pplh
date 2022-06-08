@@ -154,16 +154,43 @@
       "value": ","
     },
     "lor": {
-      "type": "STRING",
-      "value": "+"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "+"
+        },
+        {
+          "type": "STRING",
+          "value": "∨"
+        }
+      ]
     },
     "lxor": {
-      "type": "STRING",
-      "value": "^"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "^"
+        },
+        {
+          "type": "STRING",
+          "value": "⊕"
+        }
+      ]
     },
     "lnot": {
-      "type": "STRING",
-      "value": "!"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "!"
+        },
+        {
+          "type": "STRING",
+          "value": "¬"
+        }
+      ]
     },
     "leq": {
       "type": "STRING",
@@ -186,10 +213,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "lnot"
-        },
-        {
-          "type": "SYMBOL",
           "name": "leq"
         }
       ]
@@ -200,6 +223,23 @@
         {
           "type": "SYMBOL",
           "name": "identifier"
+        },
+        {
+          "type": "PREC_LEFT",
+          "value": 1,
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "lnot"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "query"
+              }
+            ]
+          }
         },
         {
           "type": "PREC_LEFT",

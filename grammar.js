@@ -18,21 +18,21 @@ module.exports = grammar({
     cond: $ => seq('|', $.query),
 
     land: $ => ',',
-    lor: $ => '+',
-    lxor: $ => '^',
-    lnot: $ => '!',
+    lor: $ => choice('+', '∨'),
+    lxor: $ => choice('^', '⊕'),
+    lnot: $ => choice('!', '¬'),
     leq: $ => '=',
 
     op: $ => choice(
       $.land,
       $.lor,
       $.lxor,
-      $.lnot,
       $.leq,
     ),
 
     query: $ => choice(
       $.identifier,
+      prec.left(1, seq($.lnot, $.query)),
       prec.left(1, seq($.query, $.op, $.query)),
       seq('(', $.query, ')'),
     ),

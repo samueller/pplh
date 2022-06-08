@@ -49,6 +49,21 @@
     }
   },
   {
+    "type": "lnot",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "lor",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "lxor",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "op",
     "named": true,
     "fields": {},
@@ -62,10 +77,6 @@
         },
         {
           "type": "leq",
-          "named": true
-        },
-        {
-          "type": "lnot",
           "named": true
         },
         {
@@ -134,6 +145,10 @@
           "named": true
         },
         {
+          "type": "lnot",
+          "named": true
+        },
+        {
           "type": "op",
           "named": true
         },
@@ -143,6 +158,10 @@
         }
       ]
     }
+  },
+  {
+    "type": "!",
+    "named": false
   },
   {
     "type": "\"",
@@ -157,11 +176,19 @@
     "named": false
   },
   {
+    "type": "+",
+    "named": false
+  },
+  {
     "type": "->",
     "named": false
   },
   {
     "type": "Pr",
+    "named": false
+  },
+  {
+    "type": "^",
     "named": false
   },
   {
@@ -181,18 +208,6 @@
     "named": true
   },
   {
-    "type": "lnot",
-    "named": true
-  },
-  {
-    "type": "lor",
-    "named": true
-  },
-  {
-    "type": "lxor",
-    "named": true
-  },
-  {
     "type": "url",
     "named": true
   },
@@ -201,7 +216,19 @@
     "named": false
   },
   {
+    "type": "¬",
+    "named": false
+  },
+  {
     "type": "→",
+    "named": false
+  },
+  {
+    "type": "∨",
+    "named": false
+  },
+  {
+    "type": "⊕",
     "named": false
   }
 ]
