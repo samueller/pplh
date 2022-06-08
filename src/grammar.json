@@ -149,28 +149,95 @@
         }
       ]
     },
+    "land": {
+      "type": "STRING",
+      "value": ","
+    },
+    "lor": {
+      "type": "STRING",
+      "value": "+"
+    },
+    "lxor": {
+      "type": "STRING",
+      "value": "^"
+    },
+    "lnot": {
+      "type": "STRING",
+      "value": "!"
+    },
+    "leq": {
+      "type": "STRING",
+      "value": "="
+    },
+    "op": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "land"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lxor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lnot"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "leq"
+        }
+      ]
+    },
     "query": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
           "type": "SYMBOL",
           "name": "identifier"
         },
         {
-          "type": "REPEAT",
+          "type": "PREC_LEFT",
+          "value": 1,
           "content": {
             "type": "SEQ",
             "members": [
               {
-                "type": "STRING",
-                "value": ","
+                "type": "SYMBOL",
+                "name": "query"
               },
               {
                 "type": "SYMBOL",
-                "name": "identifier"
+                "name": "op"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "query"
               }
             ]
           }
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "("
+            },
+            {
+              "type": "SYMBOL",
+              "name": "query"
+            },
+            {
+              "type": "STRING",
+              "value": ")"
+            }
+          ]
         }
       ]
     },

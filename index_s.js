@@ -73,15 +73,56 @@ const bayesianNetwork = vars => {
     ).join('\n')
 }
 
-const genObserve = (top) => {
-    console.log(top)
+const genQuery1 = (top) => {
+    let convertOp = (op) => {
+        switch (op) {
+            case 'lor':
+                return '||';
+            case 'land':
+                return '&&';
+            case 'leq':
+                return '<=>';
+            case 'lnot':
+                return '!';
+            case 'lxor':
+                return '^';
+            default:
+                console.error("Unknown operator: " + op);
+        }
+    };
+
+    if (top.children[0].type === '(') {
+        return genQuery1(top.children[1]);
+    }
+
+    if (top.children[0].type === 'query') {
+        let code = "";
+        code = '(' + genQuery1(top.children[0]);
+
+        if (top.children[1].type === 'op') {
+            const op = convertOp(top.children[1].children[0].type);
+            code += ' ' + op + ' ' + genQuery1(top.children[2]);
+        }
+
+        code += ')';
+        return code;
+    }
+
+    if (top.children[0].type === 'identifier') {
+        return top.children[0].text;
+    }
 }
 
 const genQuery = (top) => {
+    let code = "";
+
     // Find condition
     if (top.children[3].type == 'cond') {
-        genObserve(top.children[3].children[1]);
+        const ccode = genQuery1(top.children[3].children[1]);
+        code += `\nlet _ = observe ${ccode} in`;
     }
+
+    return code;
 };
 
 const genDice = async (tree) => {
@@ -94,7 +135,7 @@ const genDice = async (tree) => {
             .reduce(importData, vars);
         let code = await bayesianNetwork(await vars);
 
-        genQuery(tree.children
+        code += genQuery(tree.children
             .find(child => child.type == 'probability'));
 
         return code

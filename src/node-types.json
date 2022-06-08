@@ -49,6 +49,37 @@
     }
   },
   {
+    "type": "op",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "land",
+          "named": true
+        },
+        {
+          "type": "leq",
+          "named": true
+        },
+        {
+          "type": "lnot",
+          "named": true
+        },
+        {
+          "type": "lor",
+          "named": true
+        },
+        {
+          "type": "lxor",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "probability",
     "named": true,
     "fields": {},
@@ -101,6 +132,14 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "op",
+          "named": true
+        },
+        {
+          "type": "query",
+          "named": true
         }
       ]
     }
@@ -118,10 +157,6 @@
     "named": false
   },
   {
-    "type": ",",
-    "named": false
-  },
-  {
     "type": "->",
     "named": false
   },
@@ -136,6 +171,26 @@
   {
     "type": "import",
     "named": false
+  },
+  {
+    "type": "land",
+    "named": true
+  },
+  {
+    "type": "leq",
+    "named": true
+  },
+  {
+    "type": "lnot",
+    "named": true
+  },
+  {
+    "type": "lor",
+    "named": true
+  },
+  {
+    "type": "lxor",
+    "named": true
   },
   {
     "type": "url",

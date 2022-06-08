@@ -17,7 +17,25 @@ module.exports = grammar({
     probability: $ => seq('Pr', '(', $.query, optional($.cond), ')'),
     cond: $ => seq('|', $.query),
 
-    query: $ => commaSep1($.identifier),
+    land: $ => ',',
+    lor: $ => '+',
+    lxor: $ => '^',
+    lnot: $ => '!',
+    leq: $ => '=',
+
+    op: $ => choice(
+      $.land,
+      $.lor,
+      $.lxor,
+      $.lnot,
+      $.leq,
+    ),
+
+    query: $ => choice(
+      $.identifier,
+      prec.left(1, seq($.query, $.op, $.query)),
+      seq('(', $.query, ')'),
+    ),
 
     identifier: $ => /[a-zA-Z_]+/,
 
