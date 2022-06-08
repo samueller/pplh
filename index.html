@@ -1,36 +1,35 @@
 <html>
+  <head>
+    <title>PPL Health</title>
+    <script src="tree-sitter.js"></script>
+    <style>
+      textarea {
+        width: 100%;
+        height: 300px;
+      }
+    </style>
+  </head>
 
-<head>
-  <title>PPL Health</title>
-  <script src="tree-sitter.js"></script>
-  <style>
-    textarea {
-      width: 100%;
-      height: 300px;
-    }
-  </style>
-</head>
-
-<body>
-  <form>
-    <fieldset>
-      <legend>PPL Health code</legend>
-      <textarea id="pplh" disabled>
+  <body>
+    <form>
+      <fieldset>
+        <legend>PPL Health code</legend>
+        <textarea id="pplh" disabled>
 age -> aspirin -> heart_attack
 age -> heart_attack
 cholesterol -> heart_attack
 
 import "health_records.csv"
 
-Pr(heart_attack + aspirin | (age, aspirin) + (!age, cholestrol, aspirin))
-        </textarea>
-    </fieldset>
-    <fieldset>
-      <legend>Dice code</legend>
-      <textarea id="dice" readonly></textarea>
-    </fieldset>
-  </form>
-  <script lang="javascript" src="index_s.js"></script>
-</body>
-
+Pr(heart_attack + aspirin | (age, aspirin) + (!age, cholesterol, aspirin))
+</textarea
+        >
+      </fieldset>
+      <fieldset>
+        <legend>Dice code</legend>
+        <textarea id="dice" readonly></textarea>
+      </fieldset>
+    </form>
+    <script lang="javascript" src="index_s.js"></script>
+  </body>
 </html>
