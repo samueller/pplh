@@ -41,8 +41,4 @@ module.exports = grammar({
 
     url: $ => /[^\s"]+/,
   },
-})
-
-function commaSep1(rule) {
-  return seq(rule, repeat(seq(',', rule)))
-}
+});
