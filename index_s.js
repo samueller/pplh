@@ -122,6 +122,11 @@ const genQuery = (top) => {
         code += `\nlet _ = observe ${ccode} in`;
     }
 
+    // Find query
+    if (top.children[2].type === 'query') {
+        code += '\n' + genQuery1(top.children[2]);
+    }
+
     return code;
 };
 
