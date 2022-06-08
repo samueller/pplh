@@ -1,5 +1,20 @@
 [
   {
+    "type": "cond",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "query",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "edges",
     "named": true,
     "fields": {},
@@ -115,10 +130,6 @@
     "named": false
   },
   {
-    "type": "cond",
-    "named": true
-  },
-  {
     "type": "identifier",
     "named": true
   },
@@ -129,6 +140,10 @@
   {
     "type": "url",
     "named": true
+  },
+  {
+    "type": "|",
+    "named": false
   },
   {
     "type": "→",

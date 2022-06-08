@@ -122,17 +122,8 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "cond"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "query"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "cond"
             },
             {
               "type": "BLANK"
@@ -146,8 +137,17 @@
       ]
     },
     "cond": {
-      "type": "STRING",
-      "value": "|"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "|"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "query"
+        }
+      ]
     },
     "query": {
       "type": "SEQ",

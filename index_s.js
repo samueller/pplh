@@ -74,16 +74,13 @@ const bayesianNetwork = vars => {
 }
 
 const genObserve = (top) => {
-    console.log(top);
+    console.log(top)
 }
 
 const genQuery = (top) => {
-    for (let i = 0; i < top.children.length; i++) {
-        if (top.children[i].type == 'cond') {
-            // found a condition
-            genObserve(top.children[i + 1]);
-            break;
-        }
+    // Find condition
+    if (top.children[3].type == 'cond') {
+        genObserve(top.children[3].children[1]);
     }
 };
 
