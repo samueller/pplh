@@ -73,6 +73,7 @@ const bayesianNetwork = vars => {
     ).join('\n')
 }
 
+// Recursively parse query
 const genQuery1 = (top) => {
     let convertOp = (op) => {
         switch (op) {
@@ -91,29 +92,27 @@ const genQuery1 = (top) => {
         }
     };
 
-    if (top.children[0].type === '(') {
-        return genQuery1(top.children[1]);
-    }
+    switch (top.children[0].type) {
+        case 'identifier':
+            return top.children[0].text;
 
-    if (top.children[0].type === 'query') {
-        let code = "";
-        code = '(' + genQuery1(top.children[0]);
+        case '(':
+            return genQuery1(top.children[1]);
 
-        if (top.children[1].type === 'op') {
-            const op = convertOp(top.children[1].children[0].type);
-            code += ' ' + op + ' ' + genQuery1(top.children[2]);
-        }
+        case 'lnot':
+            return '(' + convertOp('lnot') + genQuery1(top.children[1]) + ')';
 
-        code += ')';
-        return code;
-    }
+        case 'query':
+            let code = "";
+            code = '(' + genQuery1(top.children[0]);
 
-    if (top.children[0].type === 'lnot') {
-        return '!' + genQuery1(top.children[1]);
-    }
+            if (top.children[1].type === 'op') {
+                const op = convertOp(top.children[1].children[0].type);
+                code += ' ' + op + ' ' + genQuery1(top.children[2]);
+            }
 
-    if (top.children[0].type === 'identifier') {
-        return top.children[0].text;
+            code += ')';
+            return code;
     }
 }
 
