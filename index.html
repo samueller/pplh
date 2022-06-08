@@ -90,14 +90,18 @@
           ).join('\n')
       }
       const genDice = tree => {
-          let vars = tree.children
-                          .filter(child => child.type == 'edges')
-                          .reduce(addParents, {})
-          vars = tree.children
-                      .filter(child => child.type == 'imports')
-                      .reduce(importData, vars)
-          let code = vars.then(bayesianNetwork)
-          return code
+        try {
+            let vars = tree.children
+                            .filter(child => child.type == 'edges')
+                            .reduce(addParents, {})
+            vars = tree.children
+                        .filter(child => child.type == 'imports')
+                        .reduce(importData, vars)
+            let code = vars.then(bayesianNetwork);
+            return code
+        } catch (err) {
+            return new Promise((resolve) => resolve("Transpilation error: " + err));
+        }
       }
       let parser
       const Parser = window.TreeSitter,
