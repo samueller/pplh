@@ -73,6 +73,20 @@ const bayesianNetwork = vars => {
     ).join('\n')
 }
 
+const genObserve = (top) => {
+    console.log(top);
+}
+
+const genQuery = (top) => {
+    for (let i = 0; i < top.children.length; i++) {
+        if (top.children[i].type == 'cond') {
+            // found a condition
+            genObserve(top.children[i + 1]);
+            break;
+        }
+    }
+};
+
 const genDice = async (tree) => {
     try {
         let vars = tree.children
@@ -83,9 +97,8 @@ const genDice = async (tree) => {
             .reduce(importData, vars);
         let code = await bayesianNetwork(await vars);
 
-        vars = tree.children
-            .filter(child => child.type == 'probability');
-        console.log(vars);
+        genQuery(tree.children
+            .find(child => child.type == 'probability'));
 
         return code
     } catch (err) {

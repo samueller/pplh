@@ -14,7 +14,8 @@ module.exports = grammar({
 
     imports: $ => seq('import', '"', $.url, '"'),
 
-    probability: $ => seq('Pr', '(', $.query, optional(seq('|', $.query)), ')'),
+    probability: $ => seq('Pr', '(', $.query, optional(seq($.cond, $.query)), ')'),
+    cond: $ => '|',
 
     query: $ => commaSep1($.identifier),
 

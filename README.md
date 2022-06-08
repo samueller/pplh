@@ -7,8 +7,7 @@ PPLH is a domain-specific probabilistic programming language for health applicat
 To install dependencies and build, first install Rust and Emscripten, then run in a shell where `emcc` is available
 ```shell
 npm install
-npx tree-sitter generate
-npx tree-sitter build-wasm .
+npm run build
 ```
 
 This will build the language parser source files and `tree-sitter-pplh.wasm` from `grammar.js`.

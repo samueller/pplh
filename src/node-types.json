@@ -42,6 +42,10 @@
       "required": true,
       "types": [
         {
+          "type": "cond",
+          "named": true
+        },
+        {
           "type": "query",
           "named": true
         }
@@ -111,6 +115,10 @@
     "named": false
   },
   {
+    "type": "cond",
+    "named": true
+  },
+  {
     "type": "identifier",
     "named": true
   },
@@ -121,10 +129,6 @@
   {
     "type": "url",
     "named": true
-  },
-  {
-    "type": "|",
-    "named": false
   },
   {
     "type": "→",

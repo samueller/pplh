@@ -4,6 +4,7 @@
   "description": "",
   "main": "bindings/node",
   "scripts": {
+    "build": "tree-sitter generate && tree-sitter build-wasm .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
