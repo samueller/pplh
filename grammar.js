@@ -1,20 +1,29 @@
 module.exports = grammar({
-    name: 'pplh',
+  name: 'pplh',
 
-    word: $ => $.identifier,
+  word: $ => $.identifier,
 
-    rules: {
-        program: $ => seq(repeat1($.edges), $.import),
+  rules: {
+    program: $ => seq(repeat1($.edges), repeat1($.imports), $.probability),
 
-        edges: $ => choice(
-            seq($.identifier, choice('->', '→'), $.identifier),
-            seq($.edges, choice('->', '→'), $.identifier)
-        ),
+    edges: $ =>
+      choice(
+        seq($.identifier, choice('->', '→'), $.identifier),
+        seq($.edges, choice('->', '→'), $.identifier)
+      ),
 
-        import: $ => seq('import', '"', $.url, '"'),
+    imports: $ => seq('import', '"', $.url, '"'),
 
-        identifier: $ => /[a-zA-Z_]+/,
+    probability: $ => seq('Pr', '(', $.query, optional(seq('|', $.query)), ')'),
 
-        url: $ => /[^\s"]+/
-    }
+    query: $ => commaSep1($.identifier),
+
+    identifier: $ => /[a-zA-Z_]+/,
+
+    url: $ => /[^\s"]+/,
+  },
 })
+
+function commaSep1(rule) {
+  return seq(rule, repeat(seq(',', rule)))
+}

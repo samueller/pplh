@@ -94,7 +94,7 @@
                           .filter(child => child.type == 'edges')
                           .reduce(addParents, {})
           vars = tree.children
-                      .filter(child => child.type == 'import')
+                      .filter(child => child.type == 'imports')
                       .reduce(importData, vars)
           let code = vars.then(bayesianNetwork)
           return code
