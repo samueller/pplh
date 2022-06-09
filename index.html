@@ -15,13 +15,13 @@
       <fieldset>
         <legend>PPL Health code</legend>
         <textarea id="pplh" disabled>
-age -> aspirin -> heart_attack
-age -> heart_attack
-cholesterol -> heart_attack
+age → aspirin → heart_attack
+age → heart_attack
+cholesterol → heart_attack
 
 import "health_records.csv"
 
-Pr(heart_attack + aspirin | (age, aspirin) + (!age, cholesterol, aspirin))
+Pr(heart_attack, aspirin | (age ∧ aspirin) ∨ (¬age ⊕ (cholesterol = aspirin)))
 </textarea
         >
       </fieldset>

@@ -17,28 +17,24 @@ module.exports = grammar({
     probability: $ => seq('Pr', '(', $.query, optional($.cond), ')'),
     cond: $ => seq('|', $.query),
 
-    land: $ => ',',
+    land: $ => choice(',', '∧'),
     lor: $ => choice('+', '∨'),
     lxor: $ => choice('^', '⊕'),
     lnot: $ => choice('!', '¬'),
     leq: $ => '=',
 
-    op: $ => choice(
-      $.land,
-      $.lor,
-      $.lxor,
-      $.leq,
-    ),
+    op: $ => choice($.land, $.lor, $.lxor, $.leq),
 
-    query: $ => choice(
-      $.identifier,
-      prec.left(1, seq($.lnot, $.query)),
-      prec.left(1, seq($.query, $.op, $.query)),
-      seq('(', $.query, ')'),
-    ),
+    query: $ =>
+      choice(
+        $.identifier,
+        prec.left(1, seq($.lnot, $.query)),
+        prec.left(1, seq($.query, $.op, $.query)),
+        seq('(', $.query, ')')
+      ),
 
     identifier: $ => /[a-zA-Z_]+/,
 
     url: $ => /[^\s"]+/,
   },
-});
+})
