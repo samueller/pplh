@@ -1,0 +1,13 @@
+severe → doctor_a → cured
+severe → cured
+
+import "simpsons.csv"
+
+Pr(cured|doctor_a)
+Pr(cured|¬doctor_a)
+
+Pr(cured|doctor_a, severe)
+Pr(cured|¬doctor_a, severe)
+
+Pr(cured|doctor_a, ¬severe)
+Pr(cured|¬doctor_a, ¬severe)
