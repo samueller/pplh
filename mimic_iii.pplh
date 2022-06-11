@@ -1,0 +1,15 @@
+young → hypertension
+young → alkaline_phosphatase
+alkaline_phosphatase → hypertension
+young → ALT → hypertension
+female → hypertension
+female → red_cells → hypertension
+female → bilirubin → hypertension
+morphine → hypertension
+furosemide → hypertension
+
+import "mimic_iii.csv"
+
+Pr(hypertension|morphine ⊕ furosemide)
+Pr(hypertension|female ∨ bilirubin)
+Pr(hypertension|young ∨ ¬ALT)
