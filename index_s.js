@@ -37,7 +37,6 @@ const importData = async (vars, importNode) => {
     },
     [[], {}]
   )
-  console.log('cols', cols[0])
   lines.slice(1).forEach(line => {
     line = line.split(',')
     if (line.length != cols[0].length) return
@@ -81,9 +80,7 @@ const nestedIf = vars => variable => parentsLeft => index => depth =>
 
 const bayesianNetwork = vars => {
   const sorted = []
-  console.log('sorting')
   topolSort(vars)(new Set())(sorted)(Object.keys(vars))
-  console.log('sorted', sorted)
   return sorted
     .map(variable =>
       vars[variable].parents
@@ -159,13 +156,10 @@ const genDice = async tree => {
     let vars = tree.children
       .filter(child => child.type == 'edges')
       .reduce(addParents, {})
-    console.log('importing')
     vars = tree.children
       .filter(child => child.type == 'imports')
       .reduce(importData, vars)
-    console.log('imported')
     let code = await bayesianNetwork(await vars)
-    console.log('really imported')
 
     code += genQuery(tree.children.find(child => child.type == 'probability'))
 
