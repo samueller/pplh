@@ -25,6 +25,7 @@ const importData = async (vars, importNode) => {
   const lines = data.split('\n')
   const cols = lines[0].split(',').reduce(
     (cols, col, i) => {
+      col = col.trim()
       cols[0].push(col)
       cols[1][col] = i
       if (!vars[col]) vars[col] = { cpt: [[0, 0]] }
@@ -36,10 +37,12 @@ const importData = async (vars, importNode) => {
     },
     [[], {}]
   )
+  console.log('cols', cols[0])
   lines.slice(1).forEach(line => {
     line = line.split(',')
     if (line.length != cols[0].length) return
     cols[0].forEach(col => {
+      col = col.trim()
       const index = cptIndex(cols[1])(vars[col].parents)(line)
       vars[col].cpt[index][0] += parseInt(line[cols[1][col]])
       vars[col].cpt[index][1]++
@@ -59,7 +62,7 @@ const topolSort = vars => visited => sorted => nodes => {
   })
 }
 
-const prob = cptEntry => cptEntry[0] / cptEntry[1]
+const prob = cptEntry => (cptEntry[1] ? cptEntry[0] / cptEntry[1] : 0)
 const oneZero = num => (num == 0 ? '0.0' : num == 1 ? '1.0' : num)
 const nestedIf = vars => variable => parentsLeft => index => depth =>
   parentsLeft.length == 1
@@ -78,7 +81,9 @@ const nestedIf = vars => variable => parentsLeft => index => depth =>
 
 const bayesianNetwork = vars => {
   const sorted = []
+  console.log('sorting')
   topolSort(vars)(new Set())(sorted)(Object.keys(vars))
+  console.log('sorted', sorted)
   return sorted
     .map(variable =>
       vars[variable].parents
@@ -154,10 +159,13 @@ const genDice = async tree => {
     let vars = tree.children
       .filter(child => child.type == 'edges')
       .reduce(addParents, {})
+    console.log('importing')
     vars = tree.children
       .filter(child => child.type == 'imports')
       .reduce(importData, vars)
+    console.log('imported')
     let code = await bayesianNetwork(await vars)
+    console.log('really imported')
 
     code += genQuery(tree.children.find(child => child.type == 'probability'))
 
